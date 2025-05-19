@@ -29,3 +29,23 @@ case "$choice" in
   "⏻ Wyłącz") systemctl poweroff ;;
   *) exit 0 ;;
 esac
+
+### Zalecane pakiety pomocnicze:
+# rofi – uruchamianie programów (Alt+F2)
+# nm-applet – zarządzanie Wi-Fi
+# volumeicon – kontrola dźwięku
+# flameshot – zrzuty ekranu
+# picom – przezroczystości
+
+###Dodaj je np. do ~/.xinitrc lub exwm-init.el:
+
+nm-applet &
+volumeicon &
+flameshot &
+picom & 
+
+### Użycie w praktyce:
+# Uruchom program	Super + r
+# Przełącz workspace	Super + 1, 2…
+# Zmień nazwę bufora	M-x rename-buffer
+# Przełącz tryb insert (do pisania w oknie, np. Firefox)	s-i (domyślnie)
