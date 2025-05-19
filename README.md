@@ -3,7 +3,7 @@
 This is my personal, modular configuration for **classic Emacs (Epacs)**, developed and used on Linux systems (primarily Arch and NixOS). Emacs serves as my all-in-one environment for coding, writing academic papers, taking notes, managing time, and experimenting with AI tools.
 
 ## 🚀 Installation
-git clone https://github.com/your-username/emacs-config ~/.emacs.d
+git clone https://github.com/KrzysztofPiekarski/emacs-config ~/.emacs.d
 
 ## ⚙️ Requirements
 Emacs 29+
