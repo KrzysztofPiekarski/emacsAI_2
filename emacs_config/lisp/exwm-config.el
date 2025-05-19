@@ -98,17 +98,6 @@
   :config
   (persp-mode))
 
-;; === Pasek: doom-modeline + zegar + bateria + pogoda ===
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1)
-  :custom
-  (doom-modeline-height 25)
-  (doom-modeline-bar-width 3)
-  (doom-modeline-time t)
-  (doom-modeline-battery t)
-  (doom-modeline-buffer-file-name-style 'truncate-except-project))
-
 ;; === Zegar + Bateria (dla każdego Emacsa, nie tylko doom) ===
 (setq display-time-24hr-format t)
 (setq display-time-default-load-average nil)

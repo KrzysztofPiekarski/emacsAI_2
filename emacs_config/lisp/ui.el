@@ -10,9 +10,19 @@
   (setq catppuccin-flavor 'mocha) ;; Możliwe: 'latte, 'frappe, 'macchiato, 'mocha
   (load-theme 'catppuccin :no-confirm)) 
   
+;; === Pasek: doom-modeline + zegar + bateria + pogoda ===
 (use-package doom-modeline
-  :init (doom-modeline-mode 1))
+  :ensure t
+  :init
+  (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-height 25)
+  (doom-modeline-bar-width 3)
+  (doom-modeline-time t)
+  (doom-modeline-battery t)
+  (doom-modeline-buffer-file-name-style 'truncate-except-project))
 
+;; Czcionka ogólna (np. dla buforów, modeline też dziedziczy)
 (set-face-attribute 'default nil :family "FiraCode Nerd Font" :height 120)
  
 ;; === DASHBOARD ===
