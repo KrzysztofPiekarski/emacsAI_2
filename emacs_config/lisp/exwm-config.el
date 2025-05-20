@@ -14,19 +14,9 @@
           ([?\s-&] . (lambda (command)
                        (interactive (list (read-shell-command "$ ")))
                        (start-process-shell-command command nil command)))
-          ([?\s-q] . (lambda () 
-					   (interactive) 
-					   (save-buffers-kill-emacs)))
-		  (exwm-input-set-key (kbd "s-x")
-            (lambda ()
-              (interactive)
-              (start-process-shell-command "powermenu" nil "~/.config/exwm/powermenu.sh")))
-		   
-          ;; === Rofi ===
           ([?\s-d] . (lambda ()
                        (interactive)
                        (start-process "rofi" nil "rofi -show drun")))
-
           ;; Kontrola głośności
           ([XF86AudioRaiseVolume] . (lambda ()
                                       (interactive)
@@ -48,13 +38,26 @@
               (unless (string= exwm-class-name "Emacs")
                 (exwm-workspace-rename-buffer exwm-title))))
 
-  ;; Inicjalizacja EXWM
+  ;; === Autostart aplikacji po uruchomieniu EXWM ===
   (add-hook 'exwm-init-hook
             (lambda ()
-              ;; Autostart
+              ;; Tapeta (Nitrogen)
+              (start-process-shell-command "nitrogen" nil "nitrogen --restore")
+
+              ;; Kompozytor (Picom)
+              (start-process-shell-command "picom" nil "picom --config ~/.config/picom/picom.conf")
+
+              ;; D-Bus (opcjonalnie)
+              ;; (start-process-shell-command "dbus" nil "eval `dbus-launch --sh-syntax`")
+
+              ;; Aplety systemowe
               (start-process-shell-command "nm-applet" nil "nm-applet")
               (start-process-shell-command "volumeicon" nil "volumeicon")
-              (start-process-shell-command "feh" nil "feh --bg-scale ~/Pictures/wallpaper.jpg")))
+              (start-process-shell-command "blueman-applet" nil "blueman-applet")
+              (start-process-shell-command "udiskie" nil "udiskie")
+              (start-process-shell-command "flameshot" nil "flameshot &")
+              ))
+
 
   ;; Włącz EXWM
   (exwm-enable))
@@ -69,7 +72,6 @@
 (use-package exwm-randr
   :after exwm
   :config
-  ;; Ustawienia monitorów — dostosuj do własnego układu
   (setq exwm-randr-workspace-monitor-plist '(0 "eDP-1" 1 "HDMI-1"))
   (add-hook 'exwm-randr-screen-change-hook
             (lambda ()
@@ -98,7 +100,18 @@
   :config
   (persp-mode))
 
-;; === Zegar + Bateria (dla każdego Emacsa, nie tylko doom) ===
+;; === Pasek: doom-modeline + zegar + bateria + pogoda ===
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-height 25)
+  (doom-modeline-bar-width 3)
+  (doom-modeline-time t)
+  (doom-modeline-battery t)
+  (doom-modeline-buffer-file-name-style 'truncate-except-project))
+
+;; === Zegar + Bateria ===
 (setq display-time-24hr-format t)
 (setq display-time-default-load-average nil)
 (display-time-mode 1)
