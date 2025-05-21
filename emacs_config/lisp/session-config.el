@@ -21,6 +21,7 @@
 
 ;; === Persp-mode: zachowywanie układów EXWM ===
 (use-package persp-mode
+  :ensure (:host github :repo "ch11ng/exwm")
   :after exwm
   :init
   (setq persp-keymap-prefix (kbd "C-c M-p"))
@@ -36,5 +37,5 @@
             (lambda ()
               (persp-save-state-to-file "~/.emacs.d/persp-state"))))
 
-(provide 'desktop)
-;;; desktop.el ends here
+(provide 'session-config)
+;;; session-config.el ends here
