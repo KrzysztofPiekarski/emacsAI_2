@@ -4,8 +4,8 @@ Utwórz plik emacs.desktop w /usr/share/xsessions/:
 # emacs.desktop
 
 [Desktop Entry]
-Name=Emacs
-Exec=emacs
+Name=EmacsWM
+Comment=Emacs Window Manager 
 Type=Application
 
 ###  Wymagania:
