@@ -8,25 +8,28 @@
 
   ;; Globalne skróty klawiszowe
   (setq exwm-input-global-keys
-        `(([?\s-r] . exwm-reset)
-          ([?\s-w] . exwm-workspace-switch)
-          ([?\s-&] . (lambda (command)
-                       (interactive (list (read-shell-command "$ ")))
-                       (start-process-shell-command command nil command)))
-          ([?\s-d] . (lambda ()
-                       (interactive)
-                       (start-process-shell-command "rofi" nil "rofi -show drun")))
-
-          ;; Kontrola głośności
-          ([XF86AudioRaiseVolume] . (lambda ()
-                                      (interactive)
-                                      (start-process-shell-command "vol-up" nil "pactl set-sink-volume @DEFAULT_SINK@ +5%")))
-          ([XF86AudioLowerVolume] . (lambda ()
-                                      (interactive)
-                                      (start-process-shell-command "vol-down" nil "pactl set-sink-volume @DEFAULT_SINK@ -5%")))
-          ([XF86AudioMute] . (lambda ()
-                               (interactive)
-                               (start-process-shell-command "vol-mute" nil "pactl set-sink-mute @DEFAULT_SINK@ toggle")))))
+        `( ([?\s-r] . exwm-reset)
+           ([?\s-w] . exwm-workspace-switch)
+           ([?\s-&] . (lambda (command)
+                        (interactive (list (read-shell-command "$ ")))
+                        (start-process-shell-command command nil command)))
+           ([?\s-d] . (lambda ()
+                        (interactive)
+                        (start-process-shell-command "rofi" nil "rofi -show drun")))
+           ;; Kontrola głośności
+           ([XF86AudioRaiseVolume] . (lambda () (interactive)
+                                       (start-process-shell-command "vol-up" nil "pactl set-sink-volume @DEFAULT_SINK@ +5%")))
+           ([XF86AudioLowerVolume] . (lambda () (interactive)
+                                       (start-process-shell-command "vol-down" nil "pactl set-sink-volume @DEFAULT_SINK@ -5%")))
+           ([XF86AudioMute] . (lambda () (interactive)
+                                (start-process-shell-command "vol-mute" nil "pactl set-sink-mute @DEFAULT_SINK@ toggle")))
+           ;; Przełączanie workspace Super + 0..9
+           ,@(mapcar (lambda (i)
+                       `(,(kbd (format "s-%d" i)) .
+                         (lambda ()
+                           (interactive)
+                           (exwm-workspace-switch-create ,i))))
+                     (number-sequence 0 9))))
 
   ;; Nazwa bufora wg klasy / tytułu
   (add-hook 'exwm-update-class-hook
@@ -37,7 +40,7 @@
               (unless (string= exwm-class-name "Emacs")
                 (exwm-workspace-rename-buffer exwm-title))))
 
-  ;; Autostart aplikacji i paneli
+  ;; Autostart programów
   (add-hook 'exwm-init-hook
             (lambda ()
               (start-process-shell-command "nitrogen" nil "nitrogen --restore")
@@ -47,9 +50,8 @@
               (start-process-shell-command "blueman-applet" nil "blueman-applet")
               (start-process-shell-command "udiskie" nil "udiskie")
               (start-process-shell-command "flameshot" nil "flameshot &")
-              (start-process-shell-command "trayer" nil "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype request --transparent true --tint 0x000000 --height 24")))
+              ;(start-process-shell-command "trayer" nil "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype request --transparent true --tint 0x000000 --height 24")))
 
-  ;; Włącz EXWM
   (exwm-enable))
 
 ;;; === System tray ===
@@ -59,6 +61,13 @@
   :config
   (exwm-systemtray-enable))
 
+;; W autostarcie same applet’y tray:
+(add-hook 'exwm-init-hook
+          (lambda ()
+            (start-process-shell-command "nm-applet" nil "nm-applet")
+            (start-process-shell-command "volumeicon" nil "volumeicon")
+            (start-process-shell-command "blueman-applet" nil "blueman-applet")))
+            
 ;;; === Dynamiczne monitory (xrandr) ===
 (use-package exwm-randr
   :after exwm

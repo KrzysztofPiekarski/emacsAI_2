@@ -4,10 +4,9 @@ Utwórz plik emacs.desktop w /usr/share/xsessions/:
 # emacs.desktop
 
 [Desktop Entry]
-Name=EXWM
-Comment=Emacs Window Manager
+Name=Emacs
 Exec=emacs
-Type=Application 
+Type=Application
 
 ###  Wymagania:
 # rofi
