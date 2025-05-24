@@ -1,0 +1,107 @@
+# ~/.config/picom/picom.conf
+
+#################################
+#          Animations           #
+#################################
+# Dodaj opcje animacji jeśli używasz picom-jonaburg-git
+# transition-length = 300
+# transition-pow-x = 0.1
+# transition-pow-y = 0.1
+# transition-pow-w = 0.1
+# transition-pow-h = 0.1
+# size-transition = true
+
+#################################
+#           Fading              #
+#################################
+fading = true;
+fade-in-step = 0.03;
+fade-out-step = 0.03;
+fade-delta = 5;
+
+#################################
+#   Przezroczystość / Opacity   #
+#################################
+inactive-opacity = 0.95;
+frame-opacity = 1.0;
+inactive-opacity-override = false;
+active-opacity = 1.0;
+
+# Określone okna, które zawsze mają być przezroczyste
+opacity-rule = [
+  "90:class_g = 'Alacritty'",
+  "95:class_g = 'Emacs'",
+  "100:class_g = 'Firefox'",
+  "100:class_g = 'Rofi'"
+];
+
+#################################
+#     Tło / Background          #
+#################################
+# Opcja "blur-background" może nie działać z EXWM
+# blur-background = true;
+# blur-method = "dual_kawase";
+# blur-strength = 5;
+
+#################################
+#       Ogólne ustawienia       #
+#################################
+backend = "glx";
+vsync = true;
+mark-wmwin-focused = true;
+mark-ovredir-focused = true;
+detect-rounded-corners = true;
+detect-client-opacity = true;
+refresh-rate = 0;
+detect-transient = true;
+detect-client-leader = true;
+use-damage = true;
+log-level = "warn";
+
+#################################
+#           Cienie              #
+#################################
+shadow = true;
+shadow-radius = 12;
+shadow-offset-x = -10;
+shadow-offset-y = -10;
+shadow-opacity = 0.6;
+
+# Okna bez cieni
+shadow-exclude = [
+  "name = 'Notification'",
+  "class_g = 'Conky'",
+  "class_g ?= 'Notify-osd'",
+  "class_g = 'Cairo-clock'",
+  "_GTK_FRAME_EXTENTS@:c",
+  "class_g = 'Rofi'"
+];
+
+#################################
+#      Zaokrąglone rogi         #
+#################################
+corner-radius = 10;
+rounded-corners-exclude = [
+  "window_type = 'dock'",
+  "window_type = 'desktop'"
+];
+
+#################################
+#     Zaokrąglone granice       #
+#################################
+round-borders = 1;
+round-borders-exclude = [
+  "class_g = 'Rofi'"
+];
+
+#################################
+#          Ustawienia okien     #
+#################################
+wintypes:
+{
+  tooltip = { fade = true; shadow = true; opacity = 0.9; focus = true; full-shadow = false; };
+  dock = { shadow = false; clip-shadow-above = true; };
+  dnd = { shadow = false; };
+  popup_menu = { opacity = 0.95; };
+  dropdown_menu = { opacity = 0.95; };
+};
