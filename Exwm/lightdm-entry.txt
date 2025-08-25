@@ -1,8 +1,45 @@
 [Desktop Entry]
-Name=Emacs EXWM
-Comment=Emacs as Window Manager
+# =============================================================================
+# LightDM Desktop Entry for Emacs + EXWM
+# =============================================================================
+# 
+# This file configures the LightDM display manager to show
+# "Emacs + EXWM" as a session option on the login screen.
+#
+# Author: Krispi
+# Version: 2.0
+# License: GPL-3.0
+# =============================================================================
+
+# Basic desktop entry information
+Name=Emacs + EXWM
+Comment=Emacs as Window Manager with EXWM
+Comment[pl]=Emacs jako Menedżer Okien z EXWM
+GenericName=Emacs EXWM
+GenericName[pl]=Emacs EXWM
+
+# Executable and validation
 Exec=/usr/bin/bash -l -c "exec emacs"
 TryExec=emacs
+Terminal=false
+
+# Desktop entry type
 Type=Application
+
+# Categories and desktop names
+Categories=System;Settings;WindowManager;
 X-LightDM-DesktopName=exwm
 DesktopNames=exwm
+
+# Icon and appearance
+Icon=emacs
+Keywords=emacs;exwm;window;manager;tiling;
+
+# Session management
+X-Session-Type=WindowManager
+X-Session-Command=emacs
+X-Session-Process=emacs
+
+# =============================================================================
+# END OF DESKTOP ENTRY
+# =============================================================================

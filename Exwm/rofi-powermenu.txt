@@ -1,73 +1,346 @@
+/* =============================================================================
+   Rofi Power Menu Configuration for Emacs AI 2.0 + EXWM
+   =============================================================================
+   
+   This file configures the Rofi power menu appearance and behavior
+   for the EXWM desktop environment.
+   
+   Author: Krispi
+   Version: 2.0
+   License: GPL-3.0
+   ============================================================================= */
+
+/* =============================================================================
+   GLOBAL STYLING
+   ============================================================================= */
+
 * {
-    background-color:           #282a36;
-    text-color:                 #f8f8f2;
-    border-color:               #bd93f9;
-    font:                       "Noto Sans 12";
+    /* Color scheme - Catppuccin Mocha inspired */
+    background-color:           #1e1e2e;
+    background-color-alt:       #313244;
+    text-color:                 #cdd6f4;
+    text-color-alt:             #a6adc8;
+    
+    /* Accent colors */
+    accent-color:               #cba6f7;
+    accent-color-alt:           #f5c2e7;
+    
+    /* Border and decoration */
+    border-color:               #cba6f7;
+    border-color-alt:           #f5c2e7;
+    
+    /* Typography */
+    font:                       "FiraCode Nerd Font 12";
+    font-size:                  12;
+    
+    /* Spacing and layout */
+    spacing:                    8;
+    padding:                    4;
 }
+
+/* =============================================================================
+   MAIN WINDOW
+   ============================================================================= */
 
 window {
-    width:                      300px;
-    padding:                    25px;
-    border:                     3px;
-    border-radius:              15px;
-    border-color:               @border-color;
+    /* Window dimensions */
+    width:                      320px;
+    height:                     auto;
+    
+    /* Positioning */
     location:                   center;
     x-offset:                   0;
-    y-offset:                   -4%;
-}
-
-entry {
-    expand:                     true;
-    width:                      150px;
-    text-color:                 @text-color;
-}
-
-prompt {
-    enabled:                    true;
-    padding:                    0px 8px 0px 0px;
-    text-color:                 @text-color;
-    font:                       "Noto Sans Bold 12";
-}
-
-element {
-    padding:                    12px;
-    border-radius:              8px;
-}
-
-element selected {
-    background-color:           #bd93f9;
-    text-color:                 #282a36;
-}
-
-element-text {
-    background-color:           inherit;
-    text-color:                 inherit;
-    vertical-align:             0.5;
-    horizontal-align:           0.5;
-}
-
-element-icon {
-    size:                       24px;
-    margin:                     0 10px 0 0;
-}
-
-mainbox {
-    children:                   [ inputbar, listview ];
-    spacing:                    12px;
+    y-offset:                   0;
+    
+    /* Border and decoration */
+    border:                     2px;
+    border-radius:              16px;
+    border-color:               @border-color;
+    
+    /* Background and transparency */
     background-color:           @background-color;
+    background-image:           url("none");
+    
+    /* Shadow and effects */
+    shadow:                     true;
+    shadow-color:               #000000;
+    shadow-offset-x:            0;
+    shadow-offset-y:            4;
+    shadow-blur:                8;
 }
+
+/* =============================================================================
+   INPUT BAR
+   ============================================================================= */
 
 inputbar {
+    /* Layout */
     children:                   [ prompt, entry ];
-    background-color:           @background-color;
-    border-radius:              8px;
-    padding:                    4px;
+    
+    /* Background */
+    background-color:           @background-color-alt;
+    background-image:           url("none");
+    
+    /* Border and decoration */
+    border:                     0;
+    border-radius:              12px;
+    
+    /* Spacing */
+    padding:                    8px;
+    spacing:                    8;
 }
 
+/* =============================================================================
+   PROMPT
+   ============================================================================= */
+
+prompt {
+    /* Display */
+    enabled:                    true;
+    
+    /* Typography */
+    text-color:                 @accent-color;
+    font:                       "FiraCode Nerd Font Bold 12";
+    
+    /* Spacing */
+    padding:                    0px 8px 0px 0px;
+    
+    /* Icon */
+    background-image:           url("none");
+}
+
+/* =============================================================================
+   ENTRY FIELD
+   ============================================================================= */
+
+entry {
+    /* Layout */
+    expand:                     true;
+    
+    /* Typography */
+    text-color:                 @text-color;
+    font:                       "FiraCode Nerd Font 12";
+    
+    /* Background */
+    background-color:           transparent;
+    background-image:           url("none");
+    
+    /* Border */
+    border:                     0;
+    
+    /* Spacing */
+    padding:                    4px 8px;
+    margin:                     0;
+}
+
+/* =============================================================================
+   LIST VIEW
+   ============================================================================= */
+
 listview {
+    /* Layout */
     columns:                    1;
-    lines:                      5;
+    lines:                      6;
     cycle:                      true;
     dynamic:                    true;
     layout:                     vertical;
+    
+    /* Background */
+    background-color:           transparent;
+    background-image:           url("none");
+    
+    /* Border */
+    border:                     0;
+    
+    /* Spacing */
+    spacing:                    4;
+    padding:                    8px;
 }
+
+/* =============================================================================
+   LIST ELEMENTS
+   ============================================================================= */
+
+element {
+    /* Layout */
+    orientation:                horizontal;
+    
+    /* Background */
+    background-color:           transparent;
+    background-image:           url("none");
+    
+    /* Border and decoration */
+    border:                     0;
+    border-radius:              8px;
+    
+    /* Spacing */
+    padding:                    12px 16px;
+    margin:                     2px 0;
+    
+    /* Cursor */
+    cursor:                     pointer;
+}
+
+element selected {
+    /* Background */
+    background-color:           @accent-color;
+    background-image:           url("none");
+    
+    /* Text color */
+    text-color:                 @background-color;
+    
+    /* Border */
+    border:                     0;
+    border-radius:              8px;
+    
+    /* Shadow */
+    shadow:                     true;
+    shadow-color:               @accent-color;
+    shadow-offset-x:            0;
+    shadow-offset-y:            2;
+    shadow-blur:                4;
+}
+
+element alternate {
+    /* Alternate row styling */
+    background-color:           @background-color-alt;
+    background-image:           url("none");
+}
+
+/* =============================================================================
+   ELEMENT TEXT
+   ============================================================================= */
+
+element-text {
+    /* Layout */
+    background-color:           transparent;
+    background-image:           url("none");
+    
+    /* Typography */
+    text-color:                 inherit;
+    font:                       "FiraCode Nerd Font 12";
+    
+    /* Alignment */
+    vertical-align:             0.5;
+    horizontal-align:           0.0;
+    
+    /* Spacing */
+    padding:                    0;
+    margin:                     0;
+}
+
+element-text selected {
+    /* Selected text styling */
+    text-color:                 @background-color;
+    font:                       "FiraCode Nerd Font Bold 12";
+}
+
+/* =============================================================================
+   ELEMENT ICONS
+   ============================================================================= */
+
+element-icon {
+    /* Size and spacing */
+    size:                       20px;
+    margin:                     0 12px 0 0;
+    
+    /* Background */
+    background-color:           transparent;
+    background-image:           url("none");
+    
+    /* Border */
+    border:                     0;
+}
+
+/* =============================================================================
+   SCROLLBAR
+   ============================================================================= */
+
+scrollbar {
+    /* Display */
+    handle-color:               @accent-color;
+    handle-width:               4px;
+    
+    /* Background */
+    background-color:           @background-color-alt;
+    
+    /* Border */
+    border:                     0;
+    border-radius:              2px;
+}
+
+/* =============================================================================
+   HOVER EFFECTS
+   ============================================================================= */
+
+element:hover {
+    /* Hover background */
+    background-color:           @background-color-alt;
+    background-image:           url("none");
+    
+    /* Border */
+    border:                     0;
+    border-radius:              8px;
+    
+    /* Transition */
+    transition:                 all 0.2s ease;
+}
+
+/* =============================================================================
+   FOCUS EFFECTS
+   ============================================================================= */
+
+element:focus {
+    /* Focus styling */
+    background-color:           @accent-color-alt;
+    background-image:           url("none");
+    
+    /* Border */
+    border:                     0;
+    border-radius:              8px;
+}
+
+/* =============================================================================
+   ANIMATIONS
+   ============================================================================= */
+
+* {
+    /* Smooth transitions */
+    transition:                 all 0.2s ease;
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================= */
+
+/* Small screens */
+@media (max-width: 480px) {
+    window {
+        width:                      280px;
+        border-radius:              12px;
+    }
+    
+    element {
+        padding:                    10px 12px;
+    }
+    
+    font-size:                      11;
+}
+
+/* Large screens */
+@media (min-width: 1920px) {
+    window {
+        width:                      400px;
+        border-radius:              20px;
+    }
+    
+    element {
+        padding:                    16px 20px;
+    }
+    
+    font-size:                      14;
+}
+
+/* =============================================================================
+   END OF ROFI POWER MENU CONFIGURATION
+   ============================================================================= */

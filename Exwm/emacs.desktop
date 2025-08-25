@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Emacs EXWM
-Comment=Emacs as Window Manager
-Exec=/usr/bin/bash -l -c "exec emacs"
-TryExec=emacs
-Type=Application
-X-LightDM-DesktopName=exwm
-DesktopNames=exwm

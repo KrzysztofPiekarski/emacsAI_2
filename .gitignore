@@ -1,0 +1,303 @@
+# Emacs AI 2.0 + EXWM Configuration - .gitignore
+
+# =============================================================================
+# EMACS FILES
+# =============================================================================
+
+# Emacs backup files
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+*.elc~
+
+# Emacs auto-save files
+\#*#
+.#*
+auto-save-list
+tramp
+
+# Emacs lock files
+*lock
+.lock
+
+# Emacs custom.el (user customizations)
+custom.el
+custom.el~
+
+# Emacs recentf files
+recentf
+
+# Emacs bookmark files
+.bookmarks
+.bookmarks~
+
+# Emacs savehist files
+savehist
+
+# Emacs desktop files
+.desktop
+.desktop~
+
+# Emacs eshell history
+.eshell/history
+.eshell/lastdir
+
+# Emacs tramp files
+/tramp
+
+# =============================================================================
+# PACKAGE MANAGEMENT
+# =============================================================================
+
+# Elpaca package manager
+elpaca/
+elpaca-builds/
+elpaca-repos/
+
+# Package.el
+elpa/
+packages/
+
+# Straight.el
+straight/
+straight/build/
+straight/repos/
+
+# Quelpa
+quelpa-build/
+
+# =============================================================================
+# LSP AND DEVELOPMENT
+# =============================================================================
+
+# Language Server Protocol
+.lsp/
+.lsp-session-v1
+.lsp-workspace-folders
+
+# Debug Adapter Protocol
+.dap/
+
+# Flycheck
+.flycheck/
+
+# Projectile
+.projectile
+
+# =============================================================================
+# ORG MODE
+# =============================================================================
+
+# Org mode attachments
+org-attach/
+
+# Org mode agenda files
+org-agenda-files
+
+# Org mode clock files
+.org-clock-save
+
+# =============================================================================
+# TERMINAL AND SHELL
+# =============================================================================
+
+# Vterm
+vterm/
+
+# Shell history
+.bash_history
+.zsh_history
+.history
+
+# Shell configuration
+.bashrc.local
+.zshrc.local
+
+# =============================================================================
+# SYSTEM FILES
+# =============================================================================
+
+# System configuration
+.config/
+.local/
+.cache/
+
+# Desktop entries
+*.desktop
+*.desktop~
+
+# X11 configuration
+.xinitrc
+.xsession
+.xsessionrc
+
+# LightDM configuration
+lightdm/
+
+# =============================================================================
+# TEMPORARY FILES
+# =============================================================================
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Log files
+*.log
+logs/
+
+# Cache files
+.cache/
+cache/
+
+# =============================================================================
+# DEVELOPMENT TOOLS
+# =============================================================================
+
+# Git
+.git/
+.gitignore~
+
+# Make
+Makefile~
+*.mk~
+
+# Documentation
+*.odt
+*.pdf
+*.doc
+*.docx
+
+# =============================================================================
+# SPECIFIC TO THIS PROJECT
+# =============================================================================
+
+# User-specific configurations
+user-config.el
+local-config.el
+
+# Backup configurations
+*.backup
+*.bak
+
+# Test files
+test/
+tests/
+*.test.el
+
+# Build artifacts
+build/
+dist/
+target/
+
+# =============================================================================
+# OS SPECIFIC
+# =============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =============================================================================
+# SECURITY
+# =============================================================================
+
+# API keys and secrets
+*.key
+*.pem
+*.p12
+*.pfx
+.env
+.env.local
+.env.production
+
+# SSH keys
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# GPG keys
+*.gpg
+*.asc
+
+# =============================================================================
+# BACKUP AND ARCHIVE
+# =============================================================================
+
+# Backup files
+*.backup
+*.bak
+*.old
+*.orig
+
+# Archive files
+*.tar
+*.tar.gz
+*.tar.bz2
+*.zip
+*.rar
+*.7z
+
+# =============================================================================
+# MEDIA FILES
+# =============================================================================
+
+# Images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.svg
+*.ico
+
+# Audio/Video
+*.mp3
+*.mp4
+*.avi
+*.mkv
+*.wav
+*.flac
+
+# =============================================================================
+# DOCUMENTATION
+# =============================================================================
+
+# Documentation files
+*.odt
+*.pdf
+*.doc
+*.docx
+*.rtf
+*.txt~
+
+# =============================================================================
+# END OF FILE
+# =============================================================================

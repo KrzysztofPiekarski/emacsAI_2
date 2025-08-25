@@ -1,99 +1,117 @@
-;; exwm-config.el - Konfiguracja EXWM do integracji z lightdm i rofi
+;; =============================================================================
+;; EXWM Configuration - Emacs AI 2.0 + EXWM Desktop Environment
+;; =============================================================================
+;; 
+;; This file provides a complete EXWM configuration with:
+;; - Workspace management (4 workspaces)
+;; - Rofi integration for application launching
+;; - System tray and power management
+;; - Automatic application placement
+;; - Enhanced key bindings
+;; - Multi-monitor support
+;;
+;; Author: Krispi
+;; Version: 2.0
+;; License: GPL-3.0
+;; =============================================================================
 
-;; Instalacja pakietów przez Elpaca
+;; =============================================================================
+;; PACKAGE INSTALLATION AND REQUIREMENTS
+;; =============================================================================
+
 (use-package exwm
   :ensure t
   :config
   (require 'exwm-config)
   (require 'exwm-systemtray)
-  
-  ;; Zaawansowana integracja z rofi jako launcherem aplikacji
-(defun exwm-run-rofi ()
-  "Uruchomienie rofi jako launchera aplikacji."
-  (interactive)
-  (start-process-shell-command "rofi" nil "rofi -show drun -theme ~/.config/rofi/config.rasi"))
+  (require 'exwm-randr))
 
-(defun exwm-run-rofi-window ()
-  "Przełączanie okien przez rofi."
-  (interactive)
-  (start-process-shell-command "rofi-window" nil "rofi -show window -theme ~/.config/rofi/config.rasi"))
+;; =============================================================================
+;; CORE EXWM CONFIGURATION
+;; =============================================================================
 
-(defun exwm-run-powermenu ()
-  "Uruchomienie menu zasilania przez rofi."
-  (interactive)
-  (start-process-shell-command "power-menu" nil "~/.config/exwm/powermenu.sh"))
+;; Basic EXWM settings
+(setq exwm-workspace-number 4)                    ; Number of workspaces
+(setq exwm-workspace-show-indicator t)            ; Show workspace indicator
+(setq exwm-layout-show-all-buffers t)             ; Show all buffers in layout
 
-;; Podstawowa konfiguracja EXWM
-(setq exwm-workspace-number 4)  ;; Liczba przestrzeni roboczych
-
-;; Tworzenie bufora z nazwą aplikacji jako nazwą bufora
+;; Buffer naming - use application name as buffer name
 (add-hook 'exwm-update-class-hook
           (lambda ()
             (exwm-workspace-rename-buffer exwm-class-name)))
 
-;; Globalne klawisze, które działają zawsze
-(setq exwm-input-global-keys
-      `(
-        ;; Przełączanie między przestrzeniami roboczymi: s-1, s-2, s-3, s-4
-        ,@(mapcar (lambda (i)
-                    `(,(kbd (format "s-%d" i)) .
-                      (lambda ()
-                        (interactive)
-                        (exwm-workspace-switch-create ,(- i 1)))))
-                  (number-sequence 1 4))
-        
-        ;; Uruchomienie rofi jako launchera aplikacji
-        (,(kbd "s-p") . exwm-run-rofi)
-        
-        ;; Przełączanie okien przez rofi
-        (,(kbd "s-Tab") . exwm-run-rofi-window)
-        
-        ;; Reload konfiguracji
-        (,(kbd "s-r") . exwm-reset)
-        
-        ;; Blokowanie ekranu
-        (,(kbd "s-l") . (lambda ()
-                          (interactive)
-                          (start-process-shell-command "slock" nil "slock")))
-        
-        ;; Uruchomienie terminala
-        (,(kbd "s-<return>") . (lambda ()
-                                 (interactive)
-                                 (start-process-shell-command "terminal" nil "alacritty")))
-        
-        ;; Zabijanie okna
-        (,(kbd "s-q") . (lambda ()
-                          (interactive)
-                          (if exwm--id
-                              (exwm-workspace-delete-window)
-                            (delete-window))))
-        
-        ;; Przełączanie między trybami linii i znaków
-        (,(kbd "s-i") . exwm-input-toggle-keyboard)))
+;; =============================================================================
+;; WORKSPACE MANAGEMENT
+;; =============================================================================
 
-;; Tryb pełnoekranowy
-(setq exwm-randr-workspace-output-plist '(0 "eDP-1"))
-(add-hook 'exwm-randr-screen-change-hook
-          (lambda ()
-            (start-process-shell-command
-             "xrandr" nil "xrandr --output eDP-1 --auto")))
-(exwm-randr-enable)
-
-;; Integracja z paskiem systemowym
-(use-package exwm-systemtray
-  :after exwm
-  :config
-  (setq exwm-systemtray-height 24)  ;; Wysokość paska systemowego
-  (exwm-systemtray-enable))
-
-;; Automatyczne przenoszenie aplikacji do konkretnych obszarów roboczych
+;; Automatic application placement to specific workspaces
 (setq exwm-manage-configurations
-      '(((equal exwm-class-name "Firefox")
-         workspace 1)
-        ((equal exwm-class-name "Thunderbird")
-         workspace 2)))
+      '(
+        ;; Web browsing - Workspace 1
+        ((equal exwm-class-name "Firefox") workspace 1)
+        ((equal exwm-class-name "Chromium") workspace 1)
+        ((equal exwm-class-name "Google-chrome") workspace 1)
+        
+        ;; Communication - Workspace 2
+        ((equal exwm-class-name "Thunderbird") workspace 2)
+        ((equal exwm-class-name "TelegramDesktop") workspace 2)
+        ((equal exwm-class-name "Slack") workspace 2)
+        
+        ;; Development - Workspace 3
+        ((equal exwm-class-name "code") workspace 3)
+        ((equal exwm-class-name "jetbrains-idea") workspace 3)
+        ((equal exwm-class-name "emacs") workspace 3)
+        
+        ;; Media and entertainment - Workspace 4
+        ((equal exwm-class-name "vlc") workspace 4)
+        ((equal exwm-class-name "spotify") workspace 4)
+        ((equal exwm-class-name "gimp") workspace 4)
+        
+        ;; Floating windows
+        ((equal exwm-class-name "Gimp") floating t)
+        ((equal exwm-class-name "Pavucontrol") floating t)
+        ((equal exwm-class-name "Blueman-manager") floating t)
+        ))
 
-;; Obsługa natywnych aplikacji X
+;; =============================================================================
+;; APPLICATION LAUNCHING AND INTEGRATION
+;; =============================================================================
+
+;; Rofi application launcher
+(defun exwm-run-rofi ()
+  "Launch rofi as application launcher."
+  (interactive)
+  (start-process-shell-command "rofi" nil "rofi -show drun -theme ~/.config/rofi/config.rasi"))
+
+;; Rofi window switcher
+(defun exwm-run-rofi-window ()
+  "Switch windows using rofi."
+  (interactive)
+  (start-process-shell-command "rofi-window" nil "rofi -show window -theme ~/.config/rofi/config.rasi"))
+
+;; Power menu using rofi
+(defun exwm-run-powermenu ()
+  "Launch power menu using rofi."
+  (interactive)
+  (start-process-shell-command "power-menu" nil "~/.config/exwm/powermenu.sh"))
+
+;; Terminal launcher
+(defun exwm-run-terminal ()
+  "Launch terminal application."
+  (interactive)
+  (start-process-shell-command "terminal" nil "alacritty"))
+
+;; Screen locker
+(defun exwm-lock-screen ()
+  "Lock the screen."
+  (interactive)
+  (start-process-shell-command "slock" nil "slock"))
+
+;; =============================================================================
+;; NATIVE X11 APPLICATION SUPPORT
+;; =============================================================================
+
+;; Key simulation for native X11 applications
 (setq exwm-input-simulation-keys
       '(([?\C-b] . [left])
         ([?\C-f] . [right])
@@ -102,18 +120,69 @@
         ([?\C-a] . [home])
         ([?\C-e] . [end])
         ([?\M-v] . [prior])
-        ([?\C-v] . [next])))
+        ([?\C-v] . [next])
+        ([?\C-w] . [delete])
+        ([?\M-w] . [backspace])))
 
-;; Włączenie EXWM
-(exwm-enable)
+;; =============================================================================
+;; AUTOSTART AND INITIALIZATION
+;; =============================================================================
 
-;; Autostart aplikacji przy uruchomieniu
+;; Autostart applications
 (defun exwm-autostart ()
-  "Autostart aplikacji po uruchomieniu EXWM."
+  "Autostart applications after EXWM initialization."
   (interactive)
   (start-process-shell-command "autostart" nil "~/.config/exwm/autostart.sh"))
 
+;; Run autostart after EXWM is ready
 (add-hook 'exwm-init-hook 'exwm-autostart)
 
-;; Eksport zmiennych dla skryptów startowych
+;; =============================================================================
+;; ENHANCED WORKSPACE FEATURES
+;; =============================================================================
+
+;; Workspace indicator timeout
+(setq exwm-workspace-indicator-timeout 2)
+
+;; =============================================================================
+;; WINDOW MANAGEMENT ENHANCEMENTS
+;; =============================================================================
+
+;; Enable floating windows for certain applications
+(setq exwm-floating-setup-hook
+      (lambda ()
+        (exwm-layout-hide-mode-line)))
+
+;; =============================================================================
+;; PERFORMANCE AND RELIABILITY
+;; =============================================================================
+
+;; Optimize buffer management
+(setq exwm-layout-show-all-buffers t)
+
+;; =============================================================================
+;; LOAD MODULAR COMPONENTS
+;; =============================================================================
+
+;; Load system integration
+(require 'system-integration)
+
+;; Load keybindings
+(require 'exwm-keybindings)
+
+;; =============================================================================
+;; FINAL INITIALIZATION
+;; =============================================================================
+
+;; Enable EXWM
+(exwm-enable)
+
+;; =============================================================================
+;; PROVIDE MODULE
+;; =============================================================================
+
 (provide 'exwm-config)
+
+;; =============================================================================
+;; END OF EXWM CONFIGURATION
+;; =============================================================================
