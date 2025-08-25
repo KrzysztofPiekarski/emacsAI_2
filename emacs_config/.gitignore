@@ -1,1 +1,128 @@
+# 🚀 Professional Emacs Configuration - Git Ignore
+# Ignore files that shouldn't be tracked in version control
+
+# ============================================================================
+# ELPACA PACKAGE MANAGER
+# ============================================================================
+
+# Elpaca build directories
+elpaca/builds/
+elpaca/queues/
+elpaca/repos/
+
+# Elpaca temporary files
+elpaca/*.elc
+elpaca/*.el~
+
+# ============================================================================
+# EMACS GENERATED FILES
+# ============================================================================
+
+# Compiled Lisp files
+*.elc
+*.el~
+
+# Auto-generated files
+auto-save-list
+tramp
+.emacs.desktop
+.emacs.desktop.lock
+
+# Customization files
+custom.el
+custom.el~
+
+# ============================================================================
+# USER SPECIFIC FILES
+# ============================================================================
+
+# User customizations
+custom.el
+custom.el~
+
+# Personal notes and files
+notes/
+personal/
+private/
+
+# ============================================================================
+# SYSTEM FILES
+# ============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ============================================================================
+# BACKUP FILES
+# ============================================================================
+
+# Backup files
+*~
+*.bak
+*.backup
+*.orig
+
+# ============================================================================
+# LOGS AND TEMPORARY FILES
+# ============================================================================
+
+# Log files
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+
+# ============================================================================
+# DEVELOPMENT FILES
+# ============================================================================
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ============================================================================
+# PACKAGE SPECIFIC
+# ============================================================================
+
+# Org mode
+*.org_archive
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# ============================================================================
+# SECURITY
+# ============================================================================
+
+# API keys and secrets
 .env
+.secrets
+*.key
+*.pem
+
+# ============================================================================
+# END OF FILE
+# ============================================================================
