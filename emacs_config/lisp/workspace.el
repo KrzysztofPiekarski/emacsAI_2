@@ -56,16 +56,44 @@
 ;; === Yasnippet - System snippetów ===
 (use-package yasnippet
   :ensure t
-  :init
+  :config
+  ;; Konfiguracja YASnippet z obsługą duplikatów
+  (setq yas-snippet-dirs (list (expand-file-name "snippets" user-emacs-directory)))
+  
+  ;; Pozwól na różne snippety o tym samym kluczu
+  (setq yas-key-syntaxes '("w_" "w" "w_." "w_.()" "^ "))
+  
+  ;; Nie wyświetlaj ostrzeżeń o duplikatach
+  (setq yas-verbosity 1)
+  
+  ;; Włącz w trybach programowania
+  (add-hook 'prog-mode-hook #'yas-minor-mode)
+  (add-hook 'text-mode-hook #'yas-minor-mode)
+  
+  ;; Globalne włączenie
   (yas-global-mode 1))
 
 ;; === Yasnippet Snippets - Kolekcja snippetów ===
 (use-package yasnippet-snippets
-  :ensure t)
+  :ensure t
+  :after yasnippet
+  :config
+  ;; Ładuj snippety bez konfliktów
+  (yas-reload-all))
 
-;; === Yasnippet Class - Snippety dla klas ===
+;; === Yasnippet Classic - Snippety dla klas ===
 (use-package yasnippet-classic-snippets
-  :ensure t)
+  :ensure t
+  :after yasnippet
+  :config
+  ;; Załaduj classic snippets z niższym priorytetem
+  (let ((classic-dir (cl-find-if (lambda (d) 
+                                    (string-match "yasnippet-classic-snippets" (or d "")))
+                                  yas-snippet-dirs)))
+    (when classic-dir
+      ;; Przenieś classic snippets na koniec listy (najniższy priorytet)
+      (setq yas-snippet-dirs (append (remove classic-dir yas-snippet-dirs) 
+                                      (list classic-dir))))))
 
 ;; === Company Yasnippet - Integracja z Company ===
 ;; Company Yasnippet - dostępny w Melpa
@@ -138,7 +166,26 @@
 (use-package flyspell
   :ensure t
   :hook (text-mode . flyspell-mode)
-  :hook (prog-mode . flyspell-prog-mode))
+  :hook (prog-mode . flyspell-prog-mode)
+  :config
+  ;; Konfiguracja Hunspell
+  (when (executable-find "hunspell")
+    (setq ispell-program-name "hunspell")
+    (setq ispell-local-dictionary "en_US")
+    (setq ispell-local-dictionary-alist
+          '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
+            ("pl_PL" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)))
+    
+    ;; Sprawdź dostępne słowniki
+    (let ((dicts (split-string (shell-command-to-string "hunspell -D 2>&1 | grep -E '^[a-z_]+'") "\n" t)))
+      (when dicts
+        (setq ispell-local-dictionary (car dicts))))
+    
+    ;; Fallback do aspell jeśli hunspell nie działa
+    (unless (and (boundp 'ispell-local-dictionary) ispell-local-dictionary)
+      (when (executable-find "aspell")
+        (setq ispell-program-name "aspell")
+        (setq ispell-local-dictionary "english")))))
 
 ;; ============================================================================
 ;; 🎯 DOSTARCZENIE I FINALIZACJA

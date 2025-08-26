@@ -147,7 +147,7 @@
   (beacon-blink-when-buffer-changes t) ;; Blink when switching buffers
   (beacon-blink-when-window-scrolls t) ;; Blink when scrolling
   (beacon-blink-when-window-changes t) ;; Blink when changing windows
-  (beacon-blink-when-point-moves-vertically t) ;; Blink on vertical movement
+  (beacon-blink-when-point-moves-vertically nil) ;; Disable vertical movement blinking
   (beacon-blink-duration 0.3)         ;; Duration of blink
   (beacon-blink-delay 0.3)            ;; Delay before blink
   (beacon-color "#ff6c6b"))           ;; Beacon color
